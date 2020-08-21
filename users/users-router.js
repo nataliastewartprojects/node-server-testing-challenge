@@ -27,4 +27,18 @@ router.post("/", (req, res) => {
     });
 });
 
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  Users.remove(id)
+    .then((item) => {
+      res.status(200).json({ message: `The user ${item} was deleted` });
+    })
+    .catch((error) => {
+      console.log("catch error - DELETE user", error);
+      res.status(500).json({
+        errormessage: "Error to DELETE a user - status 500",
+      });
+    });
+});
+
 module.exports = router;

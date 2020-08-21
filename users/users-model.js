@@ -11,20 +11,18 @@ function find() {
   return db("user").select("id", "username").orderBy("id");
 }
 
-async function insert(user) {
-  try {
-    const [id] = await db("users").insert(user, "id");
-
-    return findById(id);
-  } catch (error) {
-    throw error;
-  }
+function insert(user) {
+  return db("user")
+    .insert(user)
+    .then((ids) => {
+      return findById(ids[0]);
+    });
 }
 
 function findById(id) {
-  return db("users").where({ id }).first();
+  return db("user").where({ id }).first();
 }
 
 function remove(id) {
-  return db("users").where("id", id).del();
+  return db("user").where("id", id).del();
 }
